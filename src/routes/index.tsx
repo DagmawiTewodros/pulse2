@@ -21,9 +21,8 @@ function Home() {
       <LogoStrip />
       <StatsSection />
       <WhyThisMatters />
-      <ServicesOverview />
+      <ServiceProcessFlow />
       <AlternatingFeatures />
-      <ProcessSteps />
       <PackagesTable />
       <WhyPulseDigital />
       <TestimonialCarousel />
