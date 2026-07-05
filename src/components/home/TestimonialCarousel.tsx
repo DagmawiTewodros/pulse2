@@ -32,7 +32,7 @@ export function TestimonialCarousel() {
     setI((v) => (v + d + testimonials.length) % testimonials.length);
 
   return (
-    <section className="py-24 md:py-32 bg-[color:var(--surface)]">
+    <section className="py-16 sm:py-24 md:py-32 bg-[color:var(--surface)]">
       <div className="container-page">
         <Reveal>
           <SectionHeading
@@ -42,7 +42,7 @@ export function TestimonialCarousel() {
           />
         </Reveal>
         <div className="mt-16 max-w-3xl mx-auto">
-          <div className="relative rounded-2xl border border-border bg-white p-10 md:p-14 shadow-[0_20px_60px_-30px_rgba(20,20,60,0.2)]">
+          <div className="relative rounded-2xl border border-border bg-white p-6 sm:p-10 md:p-14 shadow-[0_20px_60px_-30px_rgba(20,20,60,0.2)]">
             <Quote
               size={32}
               className="absolute top-6 left-6"
@@ -56,7 +56,7 @@ export function TestimonialCarousel() {
                 exit={{ opacity: 0, y: -12 }}
                 transition={{ duration: 0.35 }}
               >
-                <p className="text-xl md:text-2xl leading-relaxed text-[color:var(--ink)]">
+                <p className="text-lg sm:text-xl md:text-2xl leading-relaxed text-[color:var(--ink)]">
                   {t.quote}
                 </p>
                 <p className="mt-6 font-semibold">{t.author}</p>
@@ -64,10 +64,10 @@ export function TestimonialCarousel() {
               </motion.div>
             </AnimatePresence>
           </div>
-          <div className="mt-6 flex items-center justify-center gap-3">
+          <div className="mt-4 sm:mt-6 flex items-center justify-center gap-2 sm:gap-3">
             <button
               onClick={() => go(-1)}
-              className="h-11 w-11 rounded-full border border-border flex items-center justify-center hover:border-[color:var(--ink)] transition-colors bg-white"
+              className="h-10 w-10 sm:h-11 sm:w-11 rounded-full border border-border flex items-center justify-center hover:border-[color:var(--ink)] transition-colors bg-white"
               aria-label="Previous"
             >
               <ChevronLeft size={18} />

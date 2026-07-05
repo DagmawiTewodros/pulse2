@@ -30,7 +30,7 @@ export function Navbar() {
       }`}
     >
       <div className="container-page flex h-16 items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 font-semibold tracking-tight text-lg">
+        <Link to="/" className="flex items-center gap-2 font-semibold tracking-tight text-base sm:text-lg">
           <span
             className="inline-block h-2.5 w-2.5 rounded-full"
             style={{ background: "var(--color-primary)" }}
@@ -38,7 +38,7 @@ export function Navbar() {
           Pulse Digital
         </Link>
 
-        <nav className="hidden md:flex items-center gap-8 text-sm text-[color:var(--ink-soft)]">
+        <nav className="hidden md:flex items-center gap-6 lg:gap-8 text-sm text-[color:var(--ink-soft)]">
           {links.map((l) => (
             <Link
               key={l.to}
@@ -65,21 +65,24 @@ export function Navbar() {
       </div>
 
       {open && (
-        <div className="md:hidden border-t border-border bg-[color:var(--background)]">
-          <div className="container-page py-4 flex flex-col gap-3">
+        <div className="md:hidden border-t border-border bg-[color:var(--background)] shadow-lg">
+          <div className="container-page py-4 sm:py-6 flex flex-col gap-1 sm:gap-2">
             {links.map((l) => (
               <Link
                 key={l.to}
                 to={l.to}
-                className="py-2 text-[color:var(--ink)]"
+                className="py-3 sm:py-4 px-2 text-base sm:text-lg text-[color:var(--ink)] font-medium hover:bg-[color:var(--surface)] rounded-lg transition-colors"
                 onClick={() => setOpen(false)}
+                activeProps={{ className: "text-[color:var(--primary)]" }}
               >
                 {l.label}
               </Link>
             ))}
-            <PillLink to="/contact" className="mt-2 self-start" onClick={() => setOpen(false)}>
-              Get a Free Consultation
-            </PillLink>
+            <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-border">
+              <PillLink to="/contact" className="w-full justify-center text-sm sm:text-base" onClick={() => setOpen(false)}>
+                Get a Free Consultation
+              </PillLink>
+            </div>
           </div>
         </div>
       )}

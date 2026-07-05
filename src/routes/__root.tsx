@@ -20,8 +20,8 @@ function NotFoundComponent() {
       <Navbar />
       <div className="flex min-h-[70vh] items-center justify-center bg-background px-4">
         <div className="max-w-md text-center">
-          <h1 className="text-7xl font-semibold tracking-tight">404</h1>
-          <h2 className="mt-4 text-xl font-semibold">Page not found</h2>
+          <h1 className="text-5xl sm:text-6xl md:text-7xl font-semibold tracking-tight">404</h1>
+          <h2 className="mt-4 text-lg sm:text-xl font-semibold">Page not found</h2>
           <p className="mt-2 text-sm text-[color:var(--ink-soft)]">
             The page you're looking for doesn't exist or has been moved.
           </p>
@@ -47,7 +47,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
-        <h1 className="text-xl font-semibold tracking-tight">This page didn't load</h1>
+        <h1 className="text-xl sm:text-2xl font-semibold tracking-tight">This page didn't load</h1>
         <p className="mt-2 text-sm text-[color:var(--ink-soft)]">
           Something went wrong on our end. You can try refreshing or head back home.
         </p>

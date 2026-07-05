@@ -19,7 +19,7 @@ export function ProcessSteps() {
         <div className="relative mt-20">
           {/* Desktop: connecting line behind cards */}
           <svg
-            className="absolute left-0 right-0 top-1/2 hidden -translate-y-1/2 md:block pointer-events-none"
+            className="absolute left-0 right-0 top-1/2 hidden -translate-y-1/2 lg:block pointer-events-none"
             height="60"
             width="100%"
             viewBox="0 0 1000 60"
@@ -45,10 +45,10 @@ export function ProcessSteps() {
             />
           </svg>
 
-          <div className="relative grid gap-6 md:grid-cols-4">
+          <div className="relative grid gap-4 sm:gap-6 grid-cols-2 sm:grid-cols-2 lg:grid-cols-4">
             {processSteps.map((step, i) => (
               <Reveal key={step.number} delay={i * 0.1}>
-                <div className="group relative h-full rounded-2xl border border-border bg-white p-6 shadow-[0_10px_40px_-20px_rgba(20,20,60,0.15)] transition-all hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(20,20,60,0.25)]">
+                <div className="group relative h-full rounded-2xl border border-border bg-white p-4 sm:p-6 shadow-[0_10px_40px_-20px_rgba(20,20,60,0.15)] transition-all hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(20,20,60,0.25)]">
                   {/* Step badge */}
                   <div
                     className="absolute -top-4 left-6 flex h-8 w-8 items-center justify-center rounded-full text-xs font-mono font-semibold text-white shadow-[0_8px_20px_-8px_oklch(0.42_0.22_275/0.6)]"
@@ -64,7 +64,7 @@ export function ProcessSteps() {
 
                   {/* Arrow connector between cards (desktop) */}
                   {i < processSteps.length - 1 && (
-                    <div className="absolute right-0 top-1/2 hidden -translate-y-1/2 translate-x-1/2 md:flex h-6 w-6 items-center justify-center rounded-full border border-border bg-white text-[color:var(--ink-soft)] z-10">
+                    <div className="absolute right-0 top-1/2 hidden -translate-y-1/2 translate-x-1/2 lg:flex h-6 w-6 items-center justify-center rounded-full border border-border bg-white text-[color:var(--ink-soft)] z-10">
                       <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
                         <path
                           d="M2 5h6M5 2l3 3-3 3"

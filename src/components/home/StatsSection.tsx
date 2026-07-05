@@ -25,23 +25,23 @@ const stats = [
 
 export function StatsSection() {
   return (
-    <section className="py-24 md:py-32 bg-[color:var(--surface)]">
-      <div className="container-page">
-        <div className="grid gap-6 md:grid-cols-3">
+    <section className="py-12 sm:py-16 md:py-32 bg-[color:var(--surface)]">
+      <div className="container-page px-4 sm:px-6">
+        <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {stats.map((s, i) => (
             <Reveal key={s.value} delay={i * 0.1}>
-              <div className="h-full rounded-2xl bg-white border border-border p-8 flex flex-col">
+              <div className="h-full rounded-2xl bg-white border border-border p-6 sm:p-8 flex flex-col">
                 <p
-                  className="text-6xl md:text-7xl font-semibold tracking-tight"
+                  className="text-5xl sm:text-6xl md:text-7xl font-semibold tracking-tight"
                   style={{ color: "var(--color-primary)" }}
                 >
                   {s.value}
                 </p>
-                <p className="mt-2 text-sm font-medium uppercase tracking-wider text-[color:var(--ink-soft)]">
+                <p className="mt-2 text-xs sm:text-sm font-medium uppercase tracking-wider text-[color:var(--ink-soft)]">
                   {s.label}
                 </p>
-                <p className="mt-6 text-[color:var(--ink)] leading-relaxed flex-1">{s.quote}</p>
-                <p className="mt-4 text-sm text-[color:var(--ink-soft)]">— {s.author}</p>
+                <p className="mt-4 sm:mt-6 text-sm sm:text-base text-[color:var(--ink)] leading-relaxed flex-1">{s.quote}</p>
+                <p className="mt-3 sm:mt-4 text-xs sm:text-sm text-[color:var(--ink-soft)]">— {s.author}</p>
               </div>
             </Reveal>
           ))}

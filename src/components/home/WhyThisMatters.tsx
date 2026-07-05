@@ -22,7 +22,7 @@ const items = [
 
 export function WhyThisMatters() {
   return (
-    <section className="py-24 md:py-32">
+    <section className="py-16 sm:py-24 md:py-32">
       <div className="container-page">
         <Reveal>
           <SectionHeading
@@ -31,7 +31,7 @@ export function WhyThisMatters() {
             description="Most people research you online before they reach out. If what they find doesn't match the quality of what you actually do, you're losing customers you never even knew about."
           />
         </Reveal>
-        <div className="mt-16 grid gap-6 md:grid-cols-3">
+        <div className="mt-12 sm:mt-16 grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
           {items.map((item, i) => (
             <Reveal key={item.title} delay={i * 0.1}>
               <div className="h-full rounded-2xl border border-border bg-[color:var(--surface-elevated)] p-8">

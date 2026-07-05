@@ -19,7 +19,7 @@ export function Hero() {
             "radial-gradient(60% 40% at 50% 0%, oklch(0.42 0.22 275 / 0.15), transparent 70%)",
         }}
       />
-      <div className="container-page pt-24 pb-32 md:pt-32 md:pb-40 text-center relative">
+      <div className="container-page pt-12 pb-20 sm:pt-16 md:pt-32 md:pb-40 text-center relative px-4 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -37,7 +37,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="mt-8 mx-auto max-w-4xl text-5xl md:text-7xl font-semibold tracking-tight leading-[1.05]"
+          className="mt-6 sm:mt-8 mx-auto max-w-4xl text-2xl sm:text-3xl md:text-5xl lg:text-7xl font-semibold tracking-tight leading-[1.1] sm:leading-[1.05]"
         >
           Close the gap between what you offer and how it looks online.
         </motion.h1>
@@ -46,7 +46,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2 }}
-          className="mt-6 mx-auto max-w-2xl text-lg md:text-xl text-[color:var(--ink-soft)] leading-relaxed"
+          className="mt-4 sm:mt-6 mx-auto max-w-2xl text-sm sm:text-base md:text-xl text-[color:var(--ink-soft)] leading-relaxed"
         >
           Most customers look you up online before ever reaching out. We make sure what they find
           builds trust — websites, social, and content, run by people who care.
@@ -56,7 +56,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.3 }}
-          className="mt-10 flex items-center justify-center gap-3 flex-wrap"
+          className="mt-6 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto"
         >
           <PillLink to="/contact">Get a Free Consultation</PillLink>
           <PillLink to="/packages" variant="ghost">
@@ -65,13 +65,13 @@ export function Hero() {
         </motion.div>
 
         {/* Floating cards — scroll-driven parallax (Lorikeet-style) */}
-        <div className="relative mt-20 h-72 md:h-96 max-w-5xl mx-auto">
+        <div className="relative mt-8 sm:mt-12 md:mt-20 h-48 sm:h-56 md:h-72 lg:h-96 max-w-5xl mx-auto px-2 sm:px-0">
           <ParallaxCard
             progress={scrollYProgress}
-            xRange={[0, -180]}
-            yRange={[0, -60]}
+            xRange={[0, -60]}
+            yRange={[0, -30]}
             rotateRange={[-2, -8]}
-            className="left-0 md:left-8 top-4"
+            className="left-2 sm:left-0 md:left-8 top-2 sm:top-4"
             icon={<CheckCircle2 size={16} className="text-emerald-500" />}
             title="Website live"
             subtitle="pulsedigital.co · Deployed"
@@ -80,10 +80,10 @@ export function Hero() {
           <ParallaxCard
             progress={scrollYProgress}
             xRange={[0, 0]}
-            yRange={[0, -120]}
+            yRange={[0, -80]}
             rotateRange={[0, 0]}
             scaleRange={[1, 0.9]}
-            className="left-1/2 -translate-x-1/2 top-24 md:top-16"
+            className="left-1/2 -translate-x-1/2 top-16 sm:top-20 md:top-16"
             icon={<Sparkles size={16} style={{ color: "var(--color-primary)" }} />}
             title="Post scheduled"
             subtitle="Instagram · Tue 9:00 AM"
@@ -92,10 +92,10 @@ export function Hero() {
           />
           <ParallaxCard
             progress={scrollYProgress}
-            xRange={[0, 180]}
-            yRange={[0, -30]}
+            xRange={[0, 60]}
+            yRange={[0, -20]}
             rotateRange={[2, 8]}
-            className="right-0 md:right-8 top-44 md:top-40"
+            className="right-2 sm:right-0 md:right-8 top-32 sm:top-40 md:top-40"
             icon={<Rocket size={16} className="text-orange-500" />}
             title="Blog published"
             subtitle="5 min read · SEO ready"
@@ -147,16 +147,16 @@ function ParallaxCard({
     >
       <motion.div
         style={{ x, y, rotate, scale, opacity }}
-        className={`flex items-center gap-3 rounded-2xl bg-white px-4 py-3 shadow-[0_20px_60px_-20px_rgba(20,20,60,0.25)] border border-border ${
+        className={`flex items-center gap-2 sm:gap-3 rounded-xl sm:rounded-2xl bg-white px-3 py-2 sm:px-4 sm:py-3 shadow-[0_20px_60px_-20px_rgba(20,20,60,0.25)] border border-border ${
           highlight ? "ring-1 ring-[color:var(--primary)]/20" : ""
         }`}
       >
-        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[color:var(--surface)]">
+        <div className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-lg sm:rounded-xl bg-[color:var(--surface)]">
           {icon}
         </div>
         <div className="text-left">
-          <p className="text-sm font-semibold text-[color:var(--ink)]">{title}</p>
-          <p className="text-xs text-[color:var(--ink-soft)]">{subtitle}</p>
+          <p className="text-xs sm:text-sm font-semibold text-[color:var(--ink)]">{title}</p>
+          <p className="text-[10px] sm:text-xs text-[color:var(--ink-soft)]">{subtitle}</p>
         </div>
       </motion.div>
     </motion.div>

@@ -27,7 +27,7 @@ const reasons = [
 
 export function WhyPulseDigital() {
   return (
-    <section className="py-24 md:py-32">
+    <section className="py-16 sm:py-24 md:py-32">
       <div className="container-page">
         <Reveal>
           <SectionHeading
@@ -36,7 +36,7 @@ export function WhyPulseDigital() {
             description="We work best with businesses that want a long-term relationship — the kind where we can actually move the needle."
           />
         </Reveal>
-        <div className="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-12 sm:mt-16 grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
           {reasons.map((r, i) => (
             <Reveal key={r.title} delay={i * 0.08}>
               <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[color:var(--surface)]">

@@ -49,26 +49,26 @@ function ContactPage() {
         title="Let's talk about your business."
         description="Book a free 30-minute call. We'll walk your site and socials with you and give you a plain-language read on what's working and what isn't."
       />
-      <section className="py-20 md:py-28">
-        <div className="container-page grid gap-16 lg:grid-cols-[1fr_1.1fr] items-start">
+      <section className="py-16 sm:py-20 md:py-28">
+        <div className="container-page grid gap-8 sm:gap-12 md:gap-16 lg:grid-cols-[1fr_1.1fr] items-start">
           <Reveal>
-            <div className="space-y-8">
+            <div className="space-y-6 sm:space-y-8">
               {perks.map((p) => (
                 <div key={p.title} className="flex gap-4">
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[color:var(--surface)]">
+                  <div className="flex h-10 w-10 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-xl bg-[color:var(--surface)]">
                     <p.icon size={20} style={{ color: "var(--color-primary)" }} />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold">{p.title}</h3>
+                    <h3 className="text-base sm:text-lg font-semibold">{p.title}</h3>
                     <p className="mt-1.5 text-[color:var(--ink-soft)] leading-relaxed">{p.body}</p>
                   </div>
                 </div>
               ))}
-              <div className="rounded-2xl border border-border bg-[color:var(--surface)] p-6">
+              <div className="rounded-2xl border border-border bg-[color:var(--surface)] p-4 sm:p-6">
                 <p className="text-sm text-[color:var(--ink-soft)]">Prefer email?</p>
                 <a
                   href="mailto:hello@pulsedigital.co"
-                  className="mt-1 block text-lg font-semibold text-[color:var(--ink)]"
+                  className="mt-1 block text-base sm:text-lg font-semibold text-[color:var(--ink)]">
                 >
                   hello@pulsedigital.co
                 </a>

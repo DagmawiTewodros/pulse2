@@ -51,7 +51,7 @@ export function ServiceProcessFlow() {
     <section
       ref={sectionRef}
       onMouseMove={onMouseMove}
-      className="relative overflow-hidden py-24 md:py-32"
+      className="relative overflow-hidden py-16 sm:py-24 md:py-32"
       style={{ ["--mx" as string]: "0.5", ["--my" as string]: "0.5" }}
     >
       {/* Reactive background blobs */}
@@ -75,7 +75,7 @@ export function ServiceProcessFlow() {
         </div>
 
         {/* ACT 4 — tool bracket */}
-        <div className="mt-16">
+        <div className="mt-12 sm:mt-14 md:mt-16">
           <ToolBracketAct toolsContentRef={toolsContentRef} />
         </div>
 
@@ -83,7 +83,7 @@ export function ServiceProcessFlow() {
         <ToolsToShippedLines toolsContentRef={toolsContentRef} cardRefs={shippedCardRefs} />
 
         {/* ACT 5 — shipped cards fan */}
-        <div className="mt-8">
+        <div className="mt-6 sm:mt-8">
           <ShippedAct cardRefs={shippedCardRefs} />
         </div>
       </div>
@@ -147,7 +147,7 @@ const channels = [
 function ChannelsConverge({ hubRef }: { hubRef: React.RefObject<HTMLDivElement | null> }) {
   return (
     <div className="relative">
-      <div className="relative z-10 grid grid-cols-3 md:grid-cols-6 gap-4 md:gap-2 place-items-center">
+      <div className="relative z-10 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2 sm:gap-3 md:gap-2 place-items-center">
         {channels.map((c, i) => (
           <motion.div
             key={c.label}
@@ -201,7 +201,7 @@ function ConvergeLines({
       const containerRect = containerEl.getBoundingClientRect();
       const hubRect = hubEl.getBoundingClientRect();
 
-      const width = Math.max(containerRect.width, 640);
+      const width = containerRect.width;
 
       // Real hub position, measured in the SAME coordinate space as the chips below.
       const hubX = hubRect.left + hubRect.width / 2 - containerRect.left;
@@ -211,8 +211,12 @@ function ConvergeLines({
       setSvgLayout({ width, height: targetY });
 
       const parent = containerEl.parentElement;
-      const grid = parent?.children[0] as HTMLElement | undefined;
-      const chipElements = Array.from(grid?.children ?? []).slice(0, count);
+      const grid = parent?.querySelector('[class*="grid"]') as HTMLElement | null;
+      if (!grid) {
+        console.warn('Grid not found for converge lines');
+        return;
+      }
+      const chipElements = Array.from(grid.children).slice(0, count) as HTMLElement[];
 
       const nextPaths = chipElements.map((chip, index) => {
         const rect = chip.getBoundingClientRect();
@@ -229,19 +233,21 @@ function ConvergeLines({
     updateLines();
 
     // Re-measure after entrance animations (chips + hub) have settled.
-    const timer = window.setTimeout(updateLines, 900);
+    const timer = window.setTimeout(updateLines, 1200);
     const resizeObserver = new ResizeObserver(updateLines);
     if (containerRef.current) {
       resizeObserver.observe(containerRef.current);
     }
     window.addEventListener("resize", updateLines);
     window.addEventListener("scroll", updateLines, { passive: true });
+    window.addEventListener("orientationchange", updateLines);
 
     return () => {
       window.clearTimeout(timer);
       resizeObserver.disconnect();
       window.removeEventListener("resize", updateLines);
       window.removeEventListener("scroll", updateLines);
+      window.removeEventListener("orientationchange", updateLines);
     };
   }, [count, hubRef]);
 
@@ -381,8 +387,8 @@ function FanOutLines({
 
       const containerRect = containerEl.getBoundingClientRect();
       const hubRect = hubEl.getBoundingClientRect();
-      const width = Math.max(containerRect.width, 640);
-      const height = Math.max(containerRect.height, 760);
+      const width = containerRect.width;
+      const height = containerRect.height;
       setSvgLayout({ width, height });
 
       const hubPoint: Point = {
@@ -418,19 +424,21 @@ function FanOutLines({
 
     updateLines();
 
-    const timer = window.setTimeout(updateLines, 900);
+    const timer = window.setTimeout(updateLines, 1200);
     const resizeObserver = new ResizeObserver(updateLines);
     if (containerRef.current) {
       resizeObserver.observe(containerRef.current);
     }
     window.addEventListener("resize", updateLines);
     window.addEventListener("scroll", updateLines, { passive: true });
+    window.addEventListener("orientationchange", updateLines);
 
     return () => {
       window.clearTimeout(timer);
       resizeObserver.disconnect();
       window.removeEventListener("resize", updateLines);
       window.removeEventListener("scroll", updateLines);
+      window.removeEventListener("orientationchange", updateLines);
     };
   }, [capsuleRefs, hubRef]);
 
@@ -546,8 +554,8 @@ function CapsulesToToolsLines({
 
       const containerRect = containerEl.getBoundingClientRect();
       const targetRect = targetEl.getBoundingClientRect();
-      const width = Math.max(containerRect.width, 480);
-      const height = Math.max(containerRect.height, 320);
+      const width = containerRect.width;
+      const height = containerRect.height;
       setSvgLayout({ width, height });
 
       const targetX = targetRect.left + targetRect.width / 2 - containerRect.left;
@@ -581,19 +589,21 @@ function CapsulesToToolsLines({
 
     updateLines();
 
-    const timer = window.setTimeout(updateLines, 900);
+    const timer = window.setTimeout(updateLines, 1200);
     const resizeObserver = new ResizeObserver(updateLines);
     if (containerRef.current) {
       resizeObserver.observe(containerRef.current);
     }
     window.addEventListener("resize", updateLines);
     window.addEventListener("scroll", updateLines, { passive: true });
+    window.addEventListener("orientationchange", updateLines);
 
     return () => {
       window.clearTimeout(timer);
       resizeObserver.disconnect();
       window.removeEventListener("resize", updateLines);
       window.removeEventListener("scroll", updateLines);
+      window.removeEventListener("orientationchange", updateLines);
     };
   }, [capsuleRefs, toolsContentRef]);
 
@@ -646,8 +656,8 @@ function ToolBracketAct({
 
       const containerRect = containerEl.getBoundingClientRect();
       const targetRect = targetEl.getBoundingClientRect();
-      const width = Math.max(containerRect.width, 480);
-      const height = Math.max(containerRect.height, 320);
+      const width = containerRect.width;
+      const height = containerRect.height;
       setSvgLayout({ width, height });
 
       // Converge on the exact same point ToolsToShippedLines starts from
@@ -686,19 +696,21 @@ function ToolBracketAct({
 
     updateBracket();
 
-    const timer = window.setTimeout(updateBracket, 900);
+    const timer = window.setTimeout(updateBracket, 1200);
     const resizeObserver = new ResizeObserver(updateBracket);
     if (bracketContainerRef.current) {
       resizeObserver.observe(bracketContainerRef.current);
     }
     window.addEventListener("resize", updateBracket);
     window.addEventListener("scroll", updateBracket, { passive: true });
+    window.addEventListener("orientationchange", updateBracket);
 
     return () => {
       window.clearTimeout(timer);
       resizeObserver.disconnect();
       window.removeEventListener("resize", updateBracket);
       window.removeEventListener("scroll", updateBracket);
+      window.removeEventListener("orientationchange", updateBracket);
     };
   }, [toolsContentRef]);
 
@@ -797,8 +809,8 @@ function ToolsToShippedLines({
 
       const containerRect = containerEl.getBoundingClientRect();
       const sourceRect = sourceEl.getBoundingClientRect();
-      const width = Math.max(containerRect.width, 480);
-      const height = Math.max(containerRect.height, 400);
+      const width = containerRect.width;
+      const height = containerRect.height;
       setSvgLayout({ width, height });
 
       // Same exact point ToolBracketAct converges into (bottom-center of
@@ -844,19 +856,21 @@ function ToolsToShippedLines({
 
     updateLines();
 
-    const timer = window.setTimeout(updateLines, 900);
+    const timer = window.setTimeout(updateLines, 1200);
     const resizeObserver = new ResizeObserver(updateLines);
     if (containerRef.current) {
       resizeObserver.observe(containerRef.current);
     }
     window.addEventListener("resize", updateLines);
     window.addEventListener("scroll", updateLines, { passive: true });
+    window.addEventListener("orientationchange", updateLines);
 
     return () => {
       window.clearTimeout(timer);
       resizeObserver.disconnect();
       window.removeEventListener("resize", updateLines);
       window.removeEventListener("scroll", updateLines);
+      window.removeEventListener("orientationchange", updateLines);
     };
   }, [cardRefs, toolsContentRef]);
 

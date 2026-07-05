@@ -32,7 +32,7 @@ export function ContactForm() {
 
   if (submitted) {
     return (
-      <div className="rounded-2xl border border-border bg-[color:var(--surface-elevated)] p-10 text-center">
+      <div className="rounded-2xl border border-border bg-[color:var(--surface-elevated)] p-6 sm:p-8 md:p-10 text-center">
         <h3 className="text-2xl font-semibold">Thanks — we'll be in touch.</h3>
         <p className="mt-3 text-[color:var(--ink-soft)]">
           We reply to every inquiry within one business day. Usually much faster.
@@ -44,7 +44,7 @@ export function ContactForm() {
   return (
     <form
       onSubmit={onSubmit}
-      className="rounded-2xl border border-border bg-[color:var(--surface-elevated)] p-8 md:p-10 space-y-5"
+      className="rounded-2xl border border-border bg-[color:var(--surface-elevated)] p-6 sm:p-8 md:p-10 space-y-5"
       noValidate
     >
       <div className="grid gap-5 md:grid-cols-2">
