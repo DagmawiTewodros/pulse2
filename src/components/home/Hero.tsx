@@ -1,10 +1,17 @@
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
+import { useRef } from "react";
 import { CheckCircle2, Rocket, Sparkles } from "lucide-react";
 import { PillLink } from "@/components/ui-brand/PillButton";
 
 export function Hero() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+
   return (
-    <section className="relative overflow-hidden">
+    <section ref={sectionRef} className="relative overflow-hidden">
       <div
         className="pointer-events-none absolute inset-0 -z-10 opacity-40"
         style={{
@@ -57,29 +64,42 @@ export function Hero() {
           </PillLink>
         </motion.div>
 
-        {/* Floating cards */}
+        {/* Floating cards — scroll-driven parallax (Lorikeet-style) */}
         <div className="relative mt-20 h-72 md:h-96 max-w-5xl mx-auto">
-          <FloatingCard
+          <ParallaxCard
+            progress={scrollYProgress}
+            xRange={[0, -180]}
+            yRange={[0, -60]}
+            rotateRange={[-2, -8]}
             className="left-0 md:left-8 top-4"
-            delay={0.5}
             icon={<CheckCircle2 size={16} className="text-emerald-500" />}
             title="Website live"
             subtitle="pulsedigital.co · Deployed"
+            delay={0.5}
           />
-          <FloatingCard
+          <ParallaxCard
+            progress={scrollYProgress}
+            xRange={[0, 0]}
+            yRange={[0, -120]}
+            rotateRange={[0, 0]}
+            scaleRange={[1, 0.9]}
             className="left-1/2 -translate-x-1/2 top-24 md:top-16"
-            delay={0.7}
             icon={<Sparkles size={16} style={{ color: "var(--color-primary)" }} />}
             title="Post scheduled"
             subtitle="Instagram · Tue 9:00 AM"
             highlight
+            delay={0.7}
           />
-          <FloatingCard
+          <ParallaxCard
+            progress={scrollYProgress}
+            xRange={[0, 180]}
+            yRange={[0, -30]}
+            rotateRange={[2, 8]}
             className="right-0 md:right-8 top-44 md:top-40"
-            delay={0.9}
             icon={<Rocket size={16} className="text-orange-500" />}
             title="Blog published"
             subtitle="5 min read · SEO ready"
+            delay={0.9}
           />
         </div>
       </div>
@@ -87,7 +107,12 @@ export function Hero() {
   );
 }
 
-function FloatingCard({
+function ParallaxCard({
+  progress,
+  xRange,
+  yRange,
+  rotateRange,
+  scaleRange = [1, 1],
   className = "",
   delay = 0,
   icon,
@@ -95,6 +120,11 @@ function FloatingCard({
   subtitle,
   highlight,
 }: {
+  progress: MotionValue<number>;
+  xRange: [number, number];
+  yRange: [number, number];
+  rotateRange: [number, number];
+  scaleRange?: [number, number];
   className?: string;
   delay?: number;
   icon: React.ReactNode;
@@ -102,6 +132,12 @@ function FloatingCard({
   subtitle: string;
   highlight?: boolean;
 }) {
+  const x = useTransform(progress, [0, 1], xRange);
+  const y = useTransform(progress, [0, 1], yRange);
+  const rotate = useTransform(progress, [0, 1], rotateRange);
+  const scale = useTransform(progress, [0, 1], scaleRange);
+  const opacity = useTransform(progress, [0, 0.6, 1], [1, 0.8, 0]);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 30, scale: 0.95 }}
@@ -110,8 +146,7 @@ function FloatingCard({
       className={`absolute ${className}`}
     >
       <motion.div
-        animate={{ y: [0, -8, 0] }}
-        transition={{ duration: 5, delay, repeat: Infinity, ease: "easeInOut" }}
+        style={{ x, y, rotate, scale, opacity }}
         className={`flex items-center gap-3 rounded-2xl bg-white px-4 py-3 shadow-[0_20px_60px_-20px_rgba(20,20,60,0.25)] border border-border ${
           highlight ? "ring-1 ring-[color:var(--primary)]/20" : ""
         }`}
