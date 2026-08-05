@@ -32,8 +32,8 @@ export function Navbar() {
       <div className="flex h-14 items-center justify-between px-4 sm:px-6">
         <Link to="/" className={`flex items-center gap-2 font-semibold tracking-tight text-base sm:text-lg transition-colors ${scrolled ? "text-[color:var(--ink)]" : "text-white"}`}>
           <span
-            className="inline-block h-2 w-2 rounded-full"
-            style={{ background: "var(--color-primary)", boxShadow: "0 0 10px 1px var(--color-primary)" }}
+            className="inline-block h-2 w-2 rounded-full animate-glow-pulse"
+            style={{ background: "var(--color-primary)" }}
           />
           Pulse
         </Link>

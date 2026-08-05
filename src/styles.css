@@ -98,6 +98,25 @@
   }
 }
 
+@keyframes glow-pulse {
+  0% {
+    box-shadow: 0 0 5px 0px var(--color-primary);
+    transform: scale(0.95);
+  }
+  50% {
+    box-shadow: 0 0 15px 4px var(--color-primary);
+    transform: scale(1.05);
+  }
+  100% {
+    box-shadow: 0 0 5px 0px var(--color-primary);
+    transform: scale(0.95);
+  }
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
 @utility container-page {
   width: 100%;
   max-width: 1200px;
