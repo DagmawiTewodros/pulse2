@@ -69,11 +69,10 @@ export function ConnectorOverlay({
             x: chipRect.left + chipRect.width / 2 - sectionRect.left,
             y: chipRect.top + chipRect.height - sectionRect.top,
           };
-          // End exactly at top center of hub
-          const hubRect = hubRef.current!.getBoundingClientRect();
+          // End exactly at center of hub
           const end: Point = {
-            x: hubRect.left + hubRect.width / 2 - sectionRect.left,
-            y: hubRect.top - sectionRect.top + 8, // slight inset
+            x: hubCenter.x,
+            y: hubCenter.y,
           };
 
           newPaths.push({
