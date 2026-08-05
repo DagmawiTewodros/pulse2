@@ -86,8 +86,8 @@ export function ConnectorOverlay({
 
       // 2. Heading -> Hub (Removed since we go direct now)
 
-      // 3 & 4. Center Hub -> Feature Pills (Chains) -> Tools Heading
-      const toolsHeadingCenter = getCenter(toolsHeadingRef.current);
+      // 3 & 4. Center Hub -> Feature Pills (Chains) -> CTA Button
+      const ctaCenter = getCenter(ctaButtonRef.current);
       if (hubCenter) {
         const leftChain = [0, 2, 4];
         const rightChain = [1, 3, 5];
@@ -105,11 +105,11 @@ export function ConnectorOverlay({
               prevPoint = pillCenter;
             }
           });
-          // Connect the last pill to toolsHeading
-          if (toolsHeadingCenter) {
+          // Connect the last pill to CTA Button
+          if (ctaCenter) {
              newPaths.push({
-               id: `${prefix}-end-to-tools`,
-               d: createBezier(prevPoint, toolsHeadingCenter, 0.4, 0.2),
+               id: `${prefix}-end-to-cta`,
+               d: createBezier(prevPoint, ctaCenter, 0.4, 0.2),
                type: "standard",
              });
           }
@@ -120,7 +120,6 @@ export function ConnectorOverlay({
       }
 
       // 5. CTA Button -> Shipped Cards
-      const ctaCenter = getCenter(ctaButtonRef.current);
       if (ctaCenter) {
         shippedCardsRefs.current.forEach((card, index) => {
           const cardCenter = getCenter(card);
