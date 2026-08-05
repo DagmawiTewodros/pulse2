@@ -14,7 +14,7 @@ export function Hero() {
   return (
     <section ref={sectionRef} className="relative overflow-hidden">
       <HeroWaveEffect />
-      <div className="container-page pt-12 pb-20 sm:pt-16 md:pt-32 md:pb-40 text-center relative px-4 sm:px-6">
+      <div className="container-page pt-32 pb-28 md:pt-48 md:pb-64 text-center relative px-4 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -51,11 +51,11 @@ export function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.3 }}
-          className="mt-6 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto"
+          className="mt-8 sm:mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto"
         >
-          <PillLink to="/contact">Get a Free Consultation</PillLink>
+          <PillLink to="/contact">Book a Strategy Call</PillLink>
           <PillLink to="/packages" variant="ghost" className="!text-white !border-white/30 hover:!bg-white/10 hover:!border-white/50">
-            See Our Packages
+            See Our Work
           </PillLink>
         </motion.div>
 
@@ -128,31 +128,37 @@ function ParallaxCard({
   highlight?: boolean;
 }) {
   const x = useTransform(progress, [0, 1], xRange);
-  const y = useTransform(progress, [0, 1], yRange);
+  const scrollY = useTransform(progress, [0, 1], yRange);
   const rotate = useTransform(progress, [0, 1], rotateRange);
   const scale = useTransform(progress, [0, 1], scaleRange);
   const opacity = useTransform(progress, [0, 0.6, 1], [1, 0.8, 0]);
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30, scale: 0.95 }}
+      initial={{ opacity: 0, y: 40, scale: 0.9 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] }}
       className={`absolute ${className}`}
     >
       <motion.div
-        style={{ x, y, rotate, scale, opacity }}
-        className={`flex items-center gap-2 sm:gap-3 rounded-xl sm:rounded-2xl bg-white px-3 py-2 sm:px-4 sm:py-3 shadow-[0_20px_60px_-20px_rgba(20,20,60,0.25)] border border-border ${
-          highlight ? "ring-1 ring-[color:var(--primary)]/20" : ""
-        }`}
+        style={{ x, y: scrollY, rotate, scale, opacity }}
+        className="w-max"
       >
-        <div className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-lg sm:rounded-xl bg-[color:var(--surface)]">
-          {icon}
-        </div>
-        <div className="text-left">
-          <p className="text-xs sm:text-sm font-semibold text-[color:var(--ink)]">{title}</p>
-          <p className="text-[10px] sm:text-xs text-[color:var(--ink-soft)]">{subtitle}</p>
-        </div>
+        <motion.div
+          animate={{ y: [0, -10, 0] }}
+          transition={{ repeat: Infinity, duration: 4 + delay, ease: "easeInOut" }}
+          className={`flex items-center gap-3 rounded-2xl bg-white/5 backdrop-blur-xl px-4 py-3 shadow-[0_20px_40px_-20px_rgba(0,0,0,0.5)] border border-white/10 ${
+            highlight ? "ring-1 ring-purple-500/50" : ""
+          }`}
+        >
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 border border-white/5">
+            {icon}
+          </div>
+          <div className="text-left">
+            <p className="text-sm font-medium text-white/90">{title}</p>
+            <p className="text-xs text-white/60">{subtitle}</p>
+          </div>
+        </motion.div>
       </motion.div>
     </motion.div>
   );
