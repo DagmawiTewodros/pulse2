@@ -6,7 +6,7 @@ import { packages } from "@/data/packages";
 
 export function PackagesTable() {
   return (
-    <section className="py-12 sm:py-16 md:py-32">
+    <section className="py-12 sm:py-16 md:py-20 bg-[color:var(--surface)]">
       <div className="container-page px-4 sm:px-6">
         <Reveal>
           <SectionHeading
@@ -15,68 +15,70 @@ export function PackagesTable() {
             description="Every package is priced per business. Pick the shape that fits, and we'll send you a tailored quote within 48 hours."
           />
         </Reveal>
-        <div className="mt-8 sm:mt-12 md:mt-16 grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 sm:mt-16 grid gap-6 grid-cols-1 md:grid-cols-3 max-w-6xl mx-auto">
           {packages.map((p, i) => (
-            <Reveal key={p.id} delay={i * 0.08}>
+            <Reveal key={p.id} delay={i * 0.1}>
               <div
-                className={`relative h-full rounded-2xl p-5 sm:p-6 md:p-8 flex flex-col ${
+                className={`relative h-full rounded-[24px] p-8 md:p-10 flex flex-col transition-all duration-300 hover:-translate-y-1 ${
                   p.highlight
-                    ? "bg-[color:var(--ink)] text-white border border-[color:var(--ink)]"
-                    : "bg-[color:var(--surface-elevated)] border border-border"
+                    ? "bg-[color:var(--ink)] text-white border border-[color:var(--ink)] shadow-[0_20px_40px_-15px_rgba(20,20,60,0.3)] hover:shadow-[0_25px_50px_-15px_rgba(20,20,60,0.4)] ring-1 ring-white/10"
+                    : "bg-white border border-border/60 shadow-[0_10px_30px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_15px_40px_-15px_rgba(0,0,0,0.08)]"
                 }`}
               >
                 {p.highlight && (
                   <span
-                    className="absolute -top-2.5 left-6 sm:left-8 rounded-full px-2.5 sm:px-3 py-0.5 sm:py-1 text-[10px] sm:text-xs font-semibold"
+                    className="absolute -top-3 left-8 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider"
                     style={{ background: "var(--color-primary)", color: "white" }}
                   >
                     Most popular
                   </span>
                 )}
                 <h3
-                  className={`text-xl sm:text-2xl font-semibold tracking-tight ${
+                  className={`text-2xl font-bold tracking-tight ${
                     p.highlight ? "text-white" : ""
                   }`}
                 >
                   {p.name}
                 </h3>
+                <div className="mt-4 flex items-baseline gap-1">
+                  <span className={`text-4xl font-bold tracking-tight ${p.highlight ? "text-white" : "text-[color:var(--ink)]"}`}>
+                    {p.price.split('/')[0]}
+                  </span>
+                  <span className={`text-sm font-medium ${p.highlight ? "text-white/60" : "text-[color:var(--ink-soft)]"}`}>
+                    /{p.price.split('/')[1]}
+                  </span>
+                </div>
                 <p
-                  className={`mt-1.5 sm:mt-2 text-xs sm:text-sm ${
+                  className={`mt-4 text-sm leading-relaxed ${
                     p.highlight ? "text-white/70" : "text-[color:var(--ink-soft)]"
                   }`}
                 >
                   {p.tagline}
                 </p>
-                <p
-                  className={`mt-4 sm:mt-6 text-xs sm:text-sm ${
-                    p.highlight ? "text-white/80" : "text-[color:var(--ink)]"
-                  }`}
-                >
-                  <span className="font-semibold">Best for:</span> {p.bestFor}
-                </p>
-                <ul className="mt-4 sm:mt-6 space-y-2 sm:space-y-3 flex-1">
+                <div className={`mt-8 h-px w-full ${p.highlight ? 'bg-white/10' : 'bg-border/50'}`}></div>
+                <ul className="mt-8 space-y-4 flex-1">
                   {p.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2 sm:gap-3 text-xs sm:text-sm">
+                    <li key={f} className="flex items-start gap-3 text-sm">
                       <Check
-                        size={14}
+                        size={18}
                         className={`mt-0.5 shrink-0 ${
                           p.highlight ? "text-white" : ""
                         }`}
                         style={p.highlight ? undefined : { color: "var(--color-primary)" }}
                       />
                       <span
-                        className={p.highlight ? "text-white/90" : "text-[color:var(--ink)]"}
+                        className={p.highlight ? "text-white/90 font-medium" : "text-[color:var(--ink)] font-medium"}
                       >
                         {f}
                       </span>
                     </li>
                   ))}
                 </ul>
-                <div className="mt-6 sm:mt-8">
+                <div className="mt-10">
                   <PillLink
                     to="/contact"
                     variant={p.highlight ? "primary" : "ghost"}
-                    className="w-full text-xs sm:text-sm"
+                    className="w-full text-sm py-4 rounded-[16px]"
                   >
                     Request a Quote
                   </PillLink>
@@ -85,9 +87,9 @@ export function PackagesTable() {
             </Reveal>
           ))}
         </div>
-        <p className="mt-6 sm:mt-8 text-center text-xs sm:text-sm text-[color:var(--ink-soft)]">
+        <p className="mt-12 text-center text-sm font-medium text-[color:var(--ink-soft)]">
           Custom pricing based on scope. Not sure what you need?{" "}
-          <a href="/contact" className="text-[color:var(--ink)] underline underline-offset-4">
+          <a href="/contact" className="text-[color:var(--ink)] underline underline-offset-4 hover:text-[color:var(--primary)] transition-colors">
             Let's talk it through.
           </a>
         </p>

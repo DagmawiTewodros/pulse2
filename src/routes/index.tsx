@@ -5,8 +5,7 @@ import { StatsSection } from "@/components/home/StatsSection";
 import { WhyThisMatters } from "@/components/home/WhyThisMatters";
 import { ServiceProcessFlow } from "@/components/home/ServiceProcessFlow";
 import { AlternatingFeatures } from "@/components/home/AlternatingFeatures";
-import { PackagesTable } from "@/components/home/PackagesTable";
-import { WhyPulseDigital } from "@/components/home/WhyPulseDigital";
+import { Portfolio } from "@/components/home/Portfolio";
 import { TestimonialCarousel } from "@/components/home/TestimonialCarousel";
 import { CtaBand } from "@/components/layout/CtaBand";
 
@@ -18,13 +17,13 @@ function Home() {
   return (
     <>
       <Hero />
-      <LogoStrip />
       <StatsSection />
       <WhyThisMatters />
-      <ServiceProcessFlow />
       <AlternatingFeatures />
+      <ServiceProcessFlow />
+      <Portfolio />
+      <LogoStrip />
       <PackagesTable />
-      <WhyPulseDigital />
       <TestimonialCarousel />
       <CtaBand />
     </>

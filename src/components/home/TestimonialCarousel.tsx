@@ -32,8 +32,8 @@ export function TestimonialCarousel() {
     setI((v) => (v + d + testimonials.length) % testimonials.length);
 
   return (
-    <section className="py-16 sm:py-24 md:py-32 bg-[color:var(--surface)]">
-      <div className="container-page">
+    <section className="py-12 sm:py-16 md:py-20 bg-[color:var(--surface)]">
+      <div className="container-page px-4 sm:px-6">
         <Reveal>
           <SectionHeading
             eyebrow="Testimonials"
@@ -41,11 +41,11 @@ export function TestimonialCarousel() {
             align="center"
           />
         </Reveal>
-        <div className="mt-16 max-w-3xl mx-auto">
-          <div className="relative rounded-2xl border border-border bg-white p-6 sm:p-10 md:p-14 shadow-[0_20px_60px_-30px_rgba(20,20,60,0.2)]">
+        <div className="mt-12 sm:mt-16 max-w-3xl mx-auto">
+          <div className="relative rounded-[24px] border border-border/60 bg-white p-8 sm:p-10 md:p-14 shadow-[0_20px_50px_-20px_rgba(20,20,60,0.15)]">
             <Quote
               size={32}
-              className="absolute top-6 left-6"
+              className="absolute top-6 left-6 opacity-30"
               style={{ color: "var(--color-primary)" }}
             />
             <AnimatePresence mode="wait">
@@ -64,21 +64,21 @@ export function TestimonialCarousel() {
               </motion.div>
             </AnimatePresence>
           </div>
-          <div className="mt-4 sm:mt-6 flex items-center justify-center gap-2 sm:gap-3">
+          <div className="mt-6 flex items-center justify-center gap-3">
             <button
               onClick={() => go(-1)}
-              className="h-10 w-10 sm:h-11 sm:w-11 rounded-full border border-border flex items-center justify-center hover:border-[color:var(--ink)] transition-colors bg-white"
+              className="h-11 w-11 rounded-full border border-border/60 flex items-center justify-center hover:border-[color:var(--ink)] hover:bg-[color:var(--surface)] transition-all bg-white"
               aria-label="Previous"
             >
               <ChevronLeft size={18} />
             </button>
-            <div className="flex gap-1.5">
+            <div className="flex gap-1.5 mx-2">
               {testimonials.map((_, k) => (
                 <button
                   key={k}
                   onClick={() => setI(k)}
                   className={`h-1.5 rounded-full transition-all ${
-                    k === i ? "w-6 bg-[color:var(--ink)]" : "w-1.5 bg-[color:var(--border)]"
+                    k === i ? "w-6 bg-[color:var(--primary)]" : "w-1.5 bg-[color:var(--border)]"
                   }`}
                   aria-label={`Go to ${k + 1}`}
                 />
@@ -86,7 +86,7 @@ export function TestimonialCarousel() {
             </div>
             <button
               onClick={() => go(1)}
-              className="h-11 w-11 rounded-full border border-border flex items-center justify-center hover:border-[color:var(--ink)] transition-colors bg-white"
+              className="h-11 w-11 rounded-full border border-border/60 flex items-center justify-center hover:border-[color:var(--ink)] hover:bg-[color:var(--surface)] transition-all bg-white"
               aria-label="Next"
             >
               <ChevronRight size={18} />

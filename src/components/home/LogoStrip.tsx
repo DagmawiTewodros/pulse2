@@ -1,20 +1,20 @@
-const logos = [
-  "Northwind", "Alpine Co.", "Meridian", "Foundry", "Kestrel",
-  "Beacon Labs", "Highland", "Cadence", "Orbit", "Halcyon",
+const integrations = [
+  "Figma", "Shopify", "Webflow", "Stripe", "Next.js",
+  "Instagram", "TikTok", "Mailchimp", "Klaviyo", "WordPress",
 ];
 
 export function LogoStrip() {
   return (
-    <section className="border-y border-border bg-[color:var(--surface)] py-6 sm:py-8 md:py-10 overflow-hidden">
-      <p className="text-center text-xs uppercase tracking-[0.14em] text-[color:var(--ink-soft)] mb-4 sm:mb-6">
-        Trusted by growing teams
+    <section className="bg-[color:var(--surface)] py-12 sm:py-16 overflow-hidden">
+      <p className="text-center text-xs sm:text-sm font-medium tracking-wide text-[color:var(--ink-soft)] mb-8 sm:mb-12">
+        Plugs directly into the tools you already use
       </p>
-      <div className="relative">
-        <div className="flex gap-8 sm:gap-12 md:gap-16 animate-[scroll_40s_linear_infinite] whitespace-nowrap">
-          {[...logos, ...logos].map((name, i) => (
+      <div className="relative flex max-w-7xl mx-auto px-4 mask-edges">
+        <div className="flex gap-12 sm:gap-16 md:gap-24 animate-[scroll_40s_linear_infinite] whitespace-nowrap px-6">
+          {[...integrations, ...integrations, ...integrations].map((name, i) => (
             <span
               key={i}
-              className="text-base sm:text-lg md:text-2xl font-semibold tracking-tight text-[color:var(--ink-soft)]/60"
+              className="text-lg sm:text-xl md:text-2xl font-bold tracking-tight text-[color:var(--ink-soft)]/40 hover:text-[color:var(--ink)] transition-colors duration-300"
             >
               {name}
             </span>
@@ -24,7 +24,11 @@ export function LogoStrip() {
       <style>{`
         @keyframes scroll {
           from { transform: translateX(0); }
-          to { transform: translateX(-50%); }
+          to { transform: translateX(calc(-100% / 3)); }
+        }
+        .mask-edges {
+          mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+          -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
         }
       `}</style>
     </section>
