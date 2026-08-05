@@ -30,7 +30,7 @@ export function Navbar() {
       }`}
     >
       <div className="container-page flex h-16 items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 font-semibold tracking-tight text-base sm:text-lg">
+        <Link to="/" className={`flex items-center gap-2 font-semibold tracking-tight text-base sm:text-lg transition-colors ${scrolled ? "text-[color:var(--ink)]" : "text-white"}`}>
           <span
             className="inline-block h-2.5 w-2.5 rounded-full"
             style={{ background: "var(--color-primary)" }}
@@ -38,13 +38,13 @@ export function Navbar() {
           Pulse Digital
         </Link>
 
-        <nav className="hidden md:flex items-center gap-6 lg:gap-8 text-sm text-[color:var(--ink-soft)]">
+        <nav className={`hidden md:flex items-center gap-6 lg:gap-8 text-sm transition-colors ${scrolled ? "text-[color:var(--ink-soft)]" : "text-white/80"}`}>
           {links.map((l) => (
             <Link
               key={l.to}
               to={l.to}
-              className="hover:text-[color:var(--ink)] transition-colors"
-              activeProps={{ className: "text-[color:var(--ink)] font-medium" }}
+              className={`transition-colors ${scrolled ? "hover:text-[color:var(--ink)]" : "hover:text-white"}`}
+              activeProps={{ className: scrolled ? "text-[color:var(--ink)] font-medium" : "text-white font-medium" }}
             >
               {l.label}
             </Link>
@@ -56,7 +56,7 @@ export function Navbar() {
         </div>
 
         <button
-          className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-full border border-border"
+          className={`md:hidden inline-flex h-10 w-10 items-center justify-center rounded-full border transition-colors ${scrolled ? "border-border text-current" : "border-white/20 text-white"}`}
           onClick={() => setOpen((v) => !v)}
           aria-label="Toggle menu"
         >

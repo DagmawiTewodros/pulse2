@@ -54,7 +54,7 @@ export function Hero() {
           className="mt-6 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto"
         >
           <PillLink to="/contact">Get a Free Consultation</PillLink>
-          <PillLink to="/packages" variant="ghost">
+          <PillLink to="/packages" variant="ghost" className="!text-white !border-white/30 hover:!bg-white/10 hover:!border-white/50">
             See Our Packages
           </PillLink>
         </motion.div>

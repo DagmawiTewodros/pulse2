@@ -68,7 +68,7 @@ function ContactPage() {
                 <p className="text-sm text-[color:var(--ink-soft)]">Prefer email?</p>
                 <a
                   href="mailto:hello@pulsedigital.co"
-                  className="mt-1 block text-base sm:text-lg font-semibold text-[color:var(--ink)]">
+                  className="mt-1 block text-base sm:text-lg font-semibold text-[color:var(--ink)]"
                 >
                   hello@pulsedigital.co
                 </a>
