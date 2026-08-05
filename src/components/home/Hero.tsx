@@ -15,18 +15,7 @@ export function Hero() {
     <section ref={sectionRef} className="relative overflow-hidden">
       <HeroWaveEffect />
       <div className="container-page pt-32 pb-28 md:pt-48 md:pb-64 text-center relative px-4 sm:px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 text-xs font-medium text-white/90 backdrop-blur-md"
-        >
-          <span
-            className="inline-block h-1.5 w-1.5 rounded-full bg-purple-400"
-            style={{ boxShadow: "0 0 10px 2px rgba(168, 85, 247, 0.4)" }}
-          />
-          Marketing partner for growing businesses
-        </motion.div>
+
 
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
