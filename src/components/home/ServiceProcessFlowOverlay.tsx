@@ -12,6 +12,7 @@ export function ConnectorOverlay({
   toolsHeadingRef,
   ctaButtonRef,
   shippedCardsRefs,
+  hoveredChannel,
 }: {
   sectionRef: RefObject<HTMLElement | null>;
   channelChipsRefs: RefObject<Array<HTMLDivElement | null>>;
@@ -21,9 +22,10 @@ export function ConnectorOverlay({
   toolsHeadingRef: RefObject<HTMLHeadingElement | null>;
   ctaButtonRef: RefObject<HTMLAnchorElement | null>;
   shippedCardsRefs: RefObject<Array<HTMLDivElement | null>>;
+  hoveredChannel?: number | null;
 }) {
   const [svgLayout, setSvgLayout] = useState({ width: 0, height: 0 });
-  const [paths, setPaths] = useState<Array<{ id: string; d: string }>>([]);
+  const [paths, setPaths] = useState<Array<{ id: string; d: string; type: string; index?: number }>>([]);
 
   useLayoutEffect(() => {
     const updateLines = () => {
@@ -42,7 +44,7 @@ export function ConnectorOverlay({
         };
       };
 
-      const newPaths: Array<{ id: string; d: string }> = [];
+      const newPaths: Array<{ id: string; d: string; type: string; index?: number }> = [];
 
       // Helper to draw a smooth vertical S-curve between two points with optional lateral spread
       const createBezier = (start: Point, end: Point, verticalTension: number = 0.5, startTension: number = 0) => {
@@ -55,28 +57,35 @@ export function ConnectorOverlay({
         return `M ${start.x} ${start.y} C ${c1x} ${c1y}, ${c2x} ${c2y}, ${end.x} ${end.y}`;
       };
 
-      // 1. Channel icons -> Heading
-      const heading1Center = getCenter(heading1Ref.current);
-      if (heading1Center) {
+      // 1. Channel icons -> Center Hub (Direct graceful connection)
+      const hubCenter = getCenter(hubRef.current);
+      if (hubCenter) {
         channelChipsRefs.current.forEach((chip, index) => {
-          const chipCenter = getCenter(chip);
-          if (chipCenter) {
-            newPaths.push({
-              id: `chip-${index}`,
-              d: createBezier(chipCenter, heading1Center, 0.4, 0.15),
-            });
-          }
+          if (!chip) return;
+          const chipRect = chip.getBoundingClientRect();
+          const sectionRect = sectionEl.getBoundingClientRect();
+          // Start exactly at bottom center of the chip
+          const start: Point = {
+            x: chipRect.left + chipRect.width / 2 - sectionRect.left,
+            y: chipRect.top + chipRect.height - sectionRect.top,
+          };
+          // End exactly at top center of hub
+          const hubRect = hubRef.current!.getBoundingClientRect();
+          const end: Point = {
+            x: hubRect.left + hubRect.width / 2 - sectionRect.left,
+            y: hubRect.top - sectionRect.top + 8, // slight inset
+          };
+
+          newPaths.push({
+            id: `chip-${index}`,
+            d: createBezier(start, end, 0.6, 0.1),
+            type: "hub-connection",
+            index,
+          });
         });
       }
 
-      // 2. Heading -> Center Hub
-      const hubCenter = getCenter(hubRef.current);
-      if (heading1Center && hubCenter) {
-        newPaths.push({
-          id: 'heading-to-hub',
-          d: createBezier(heading1Center, hubCenter, 0.5, 0),
-        });
-      }
+      // 2. Heading -> Hub (Removed since we go direct now)
 
       // 3 & 4. Center Hub -> Feature Pills (Chains) -> Tools Heading
       const toolsHeadingCenter = getCenter(toolsHeadingRef.current);
@@ -92,6 +101,7 @@ export function ConnectorOverlay({
               newPaths.push({
                 id: `${prefix}-to-pill-${pillIndex}`,
                 d: createBezier(prevPoint, pillCenter, 0.4, 0.2),
+                type: "standard",
               });
               prevPoint = pillCenter;
             }
@@ -101,6 +111,7 @@ export function ConnectorOverlay({
              newPaths.push({
                id: `${prefix}-end-to-tools`,
                d: createBezier(prevPoint, toolsHeadingCenter, 0.4, 0.2),
+               type: "standard",
              });
           }
         };
@@ -118,6 +129,7 @@ export function ConnectorOverlay({
             newPaths.push({
               id: `cta-to-card-${index}`,
               d: createBezier(ctaCenter, cardCenter, 0.5, 0.3),
+              type: "standard",
             });
           }
         });
@@ -168,6 +180,10 @@ export function ConnectorOverlay({
         fill="none"
       >
         <defs>
+          <linearGradient id="premiumConnector" x1="0" y1="0" x2="0" y2="100%" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stopColor="#A855F7" />
+            <stop offset="100%" stopColor="#EC4899" />
+          </linearGradient>
           <linearGradient id="connectorGradient" x1="0" y1="0" x2="0" y2="100%" gradientUnits="userSpaceOnUse">
             <stop offset="0%" stopColor="oklch(0.65 0.28 330)" stopOpacity="0.35" />
             <stop offset="100%" stopColor="oklch(0.55 0.24 275)" stopOpacity="0.20" />
@@ -180,20 +196,61 @@ export function ConnectorOverlay({
             </feMerge>
           </filter>
         </defs>
-        {paths.map((path, i) => (
-          <motion.path
-            key={path.id}
-            d={path.d}
-            stroke="url(#connectorGradient)"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            filter="url(#glow)"
-            initial={{ pathLength: 0, opacity: 0 }}
-            whileInView={{ pathLength: 1, opacity: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 1.2, delay: 0.1 * i, ease: "easeInOut" }}
-          />
-        ))}
+        {paths.map((path, i) => {
+          if (path.type === "hub-connection") {
+            const isHovered = hoveredChannel === path.index;
+            const isDimmed = hoveredChannel !== null && !isHovered;
+            
+            return (
+              <g key={path.id}>
+                {/* Base idle path */}
+                <motion.path
+                  d={path.d}
+                  stroke="url(#premiumConnector)"
+                  strokeWidth={isHovered ? "2.5" : "1.5"}
+                  strokeLinecap="round"
+                  filter={isHovered ? "url(#glow)" : "none"}
+                  className="transition-all duration-300"
+                  initial={{ pathLength: 0, opacity: 0 }}
+                  whileInView={{ pathLength: 1, opacity: isDimmed ? 0.2 : (isHovered ? 1 : 0.4) }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 1.5, delay: 0.1 * (path.index || 0), ease: [0.22, 1, 0.36, 1] }}
+                />
+                
+                {/* Traveling pulse */}
+                <motion.path
+                  d={path.d}
+                  stroke="#FFFFFF"
+                  strokeWidth={isHovered ? "3" : "2"}
+                  strokeLinecap="round"
+                  filter="url(#glow)"
+                  initial={{ strokeDashoffset: 100, strokeDasharray: "15 100", opacity: 0 }}
+                  animate={isHovered ? { strokeDashoffset: [100, 0], opacity: [0, 1, 0] } : {}}
+                  transition={{ 
+                    duration: 1.5, 
+                    repeat: Infinity, 
+                    ease: "easeIn" 
+                  }}
+                />
+              </g>
+            );
+          }
+
+          return (
+            <motion.path
+              key={path.id}
+              d={path.d}
+              stroke="url(#connectorGradient)"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              filter="url(#glow)"
+              initial={{ pathLength: 0, opacity: 0 }}
+              whileInView={{ pathLength: 1, opacity: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 1.2, delay: 0.1 * i, ease: "easeInOut" }}
+            />
+          );
+        })}
       </svg>
     </div>
   );

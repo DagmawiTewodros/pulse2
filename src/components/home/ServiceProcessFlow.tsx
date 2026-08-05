@@ -41,6 +41,7 @@ export function ServiceProcessFlow() {
   const toolsHeadingRef = useRef<HTMLHeadingElement>(null);
   const ctaButtonRef = useRef<HTMLAnchorElement>(null);
   const shippedCardRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const [hoveredChannel, setHoveredChannel] = useState<number | null>(null);
 
   const onMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     const el = sectionRef.current;
@@ -71,15 +72,16 @@ export function ServiceProcessFlow() {
         toolsHeadingRef={toolsHeadingRef}
         ctaButtonRef={ctaButtonRef}
         shippedCardsRefs={shippedCardRefs}
+        hoveredChannel={hoveredChannel}
       />
 
       <div className="container-page relative z-10">
         {/* ACT 1 — channels converge */}
-        <ChannelsConverge chipsRefs={channelChipsRefs} headingRef={heading1Ref} />
+        <ChannelsConverge chipsRefs={channelChipsRefs} headingRef={heading1Ref} hoveredChannel={hoveredChannel} setHoveredChannel={setHoveredChannel} />
 
         {/* ACT 2 — hub */}
         <div className="mt-8 relative z-10">
-          <HubAct hubRef={hubRef} />
+          <HubAct hubRef={hubRef} hoveredChannel={hoveredChannel} />
         </div>
 
 
@@ -156,28 +158,48 @@ const channels = [
   { icon: Search, label: "SEO" },
 ];
 
-function ChannelsConverge({ chipsRefs, headingRef }: { chipsRefs: React.RefObject<Array<HTMLDivElement | null>>; headingRef: React.RefObject<HTMLHeadingElement | null> }) {
+function ChannelsConverge({ 
+  chipsRefs, 
+  headingRef,
+  hoveredChannel,
+  setHoveredChannel 
+}: { 
+  chipsRefs: React.RefObject<Array<HTMLDivElement | null>>; 
+  headingRef: React.RefObject<HTMLHeadingElement | null>;
+  hoveredChannel: number | null;
+  setHoveredChannel: (v: number | null) => void;
+}) {
   return (
-    <div className="relative">
-      <div className="relative z-10 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2 sm:gap-3 md:gap-2 place-items-center">
-        {channels.map((c, i) => (
-          <motion.div
-            key={c.label}
-            ref={(el: HTMLDivElement | null) => {
-              if (chipsRefs.current) chipsRefs.current[i] = el;
-            }}
-            initial={{ opacity: 0, y: -20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.5, delay: i * 0.08 }}
-            className={`flex flex-col items-center ${i % 2 === 0 ? "" : "md:-translate-y-6"}`}
-          >
-            <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-border bg-white shadow-[0_10px_30px_-15px_rgba(20,20,60,0.25)]">
-              <c.icon size={22} style={{ color: "var(--color-primary)" }} />
-            </div>
-            <p className="mt-2 text-xs font-semibold text-[color:var(--ink)]">{c.label}</p>
-          </motion.div>
-        ))}
+    <div className="relative pt-12 md:pt-20">
+      <div className="relative z-10 flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8 lg:gap-12 max-w-5xl mx-auto px-4">
+        {channels.map((c, i) => {
+          const isOuter = i === 0 || i === 5;
+          const isMid = i === 1 || i === 4;
+          const arcOffset = isOuter ? "md:-translate-y-6" : isMid ? "md:translate-y-2" : "md:translate-y-8";
+          const isHovered = hoveredChannel === i;
+          const isDimmed = hoveredChannel !== null && hoveredChannel !== i;
+          
+          return (
+            <motion.div
+              key={c.label}
+              ref={(el: HTMLDivElement | null) => {
+                if (chipsRefs.current) chipsRefs.current[i] = el;
+              }}
+              onMouseEnter={() => setHoveredChannel(i)}
+              onMouseLeave={() => setHoveredChannel(null)}
+              initial={{ opacity: 0, y: -20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.5, delay: i * 0.08 }}
+              className={`flex flex-col items-center cursor-pointer transition-all duration-300 ${arcOffset} ${isHovered ? "-translate-y-2 scale-105" : ""} ${isDimmed ? "opacity-40" : "opacity-100"}`}
+            >
+              <div className={`flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl border border-border bg-white shadow-[0_10px_30px_-15px_rgba(20,20,60,0.25)] transition-shadow duration-300 ${isHovered ? "shadow-[0_20px_40px_-10px_rgba(168,85,247,0.3)] border-purple-200" : ""}`}>
+                <c.icon size={22} style={{ color: "var(--color-primary)" }} />
+              </div>
+              <p className="mt-3 text-xs font-semibold text-[color:var(--ink)]">{c.label}</p>
+            </motion.div>
+          );
+        })}
       </div>
 
       <div className="relative z-10 mt-12 text-center">
@@ -195,9 +217,9 @@ function ChannelsConverge({ chipsRefs, headingRef }: { chipsRefs: React.RefObjec
 
 /* ---------------- ACT 2 — Hub ---------------- */
 
-function HubAct({ hubRef }: { hubRef: RefObject<HTMLDivElement | null> }) {
+function HubAct({ hubRef, hoveredChannel }: { hubRef: RefObject<HTMLDivElement | null>; hoveredChannel: number | null }) {
   return (
-    <div className="relative flex flex-col items-center pt-24">
+    <div className="relative flex flex-col items-center pt-32">
       {/* Glowing hub — hubRef attached to this exact box so ConvergeLines can find its real position */}
       <motion.div
         ref={hubRef}
@@ -208,19 +230,21 @@ function HubAct({ hubRef }: { hubRef: RefObject<HTMLDivElement | null> }) {
         className="relative"
       >
         <div
-          className="absolute inset-0 -m-8 rounded-full blur-2xl"
+          className="absolute inset-0 -m-12 rounded-full blur-2xl animate-glow-pulse"
           style={{
             background:
-              "radial-gradient(circle, oklch(0.65 0.28 330 / 0.7), oklch(0.75 0.19 60 / 0.4) 40%, transparent 70%)",
+              "radial-gradient(circle, oklch(0.65 0.28 330 / 0.5), transparent 70%)",
           }}
         />
         <motion.div
-          animate={{ y: [0, -6, 0] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-          className="relative flex h-24 w-24 items-center justify-center rounded-[1.75rem] bg-white shadow-[0_20px_60px_-15px_rgba(20,20,60,0.4)]"
+          animate={{ y: [0, -6, 0], scale: hoveredChannel !== null ? 1.08 : 1 }}
+          transition={{ duration: hoveredChannel !== null ? 0.3 : 4, repeat: hoveredChannel !== null ? 0 : Infinity, ease: "easeInOut" }}
+          className={`relative flex h-20 w-20 md:h-24 md:w-24 items-center justify-center rounded-[1.75rem] bg-white border border-purple-100 transition-shadow duration-300 ${
+            hoveredChannel !== null ? "shadow-[0_20px_60px_-10px_rgba(168,85,247,0.7)]" : "shadow-[0_20px_60px_-15px_rgba(168,85,247,0.4)]"
+          }`}
         >
           <Zap
-            size={40}
+            size={36}
             fill="var(--color-primary)"
             style={{ color: "var(--color-primary)" }}
           />
