@@ -6,6 +6,7 @@ import { WhyThisMatters } from "@/components/home/WhyThisMatters";
 import { ServiceProcessFlow } from "@/components/home/ServiceProcessFlow";
 import { AlternatingFeatures } from "@/components/home/AlternatingFeatures";
 import { Portfolio } from "@/components/home/Portfolio";
+import { PackagesTable } from "@/components/home/PackagesTable";
 import { TestimonialCarousel } from "@/components/home/TestimonialCarousel";
 import { CtaBand } from "@/components/layout/CtaBand";
 
