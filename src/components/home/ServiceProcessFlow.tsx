@@ -488,7 +488,7 @@ function ShippedCard({
         </span>
         <span className="text-xs font-semibold text-[color:var(--ink)]">{card.label}</span>
       </div>
-      <div className="mt-4 h-14 w-14 rounded-full bg-gradient-to-br from-[color:var(--surface)] to-[color:var(--accent)] border border-border mx-auto" />
+      <div className="mt-4 h-14 w-14 rounded-full bg-white border border-border mx-auto" />
       <p className="mt-3 text-sm font-medium text-[color:var(--ink)] leading-snug text-center">
         "{card.quote}"
       </p>
