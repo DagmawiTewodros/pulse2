@@ -203,7 +203,7 @@ function ChannelsConverge({
       </div>
 
       <div className="relative z-10 mt-12 text-center">
-        <h2 ref={headingRef} className="mx-auto max-w-3xl text-4xl md:text-5xl font-semibold tracking-tight leading-[1.05] inline-block px-4 py-2 bg-[color:var(--background)] relative z-20">
+        <h2 ref={headingRef} className="mx-auto max-w-3xl text-4xl md:text-5xl font-semibold tracking-tight leading-[1.05] relative z-20">
           Your channels. One coherent presence.
         </h2>
         <p className="mx-auto mt-4 max-w-xl text-[color:var(--ink-soft)] leading-relaxed relative z-20">
@@ -372,7 +372,7 @@ function ToolBracketAct({
           ref={toolsContentRef}
           className="absolute inset-0 flex flex-col items-center justify-center text-center px-8"
         >
-          <h2 ref={toolsHeadingRef} className="max-w-2xl text-4xl md:text-5xl font-semibold tracking-tight leading-[1.05] inline-block px-4 py-2 bg-[color:var(--background)] relative z-20">
+          <h2 ref={toolsHeadingRef} className="max-w-2xl text-4xl md:text-5xl font-semibold tracking-tight leading-[1.05] relative z-20">
             We plug into the tools you already use.
           </h2>
           <p className="mt-4 max-w-lg text-[color:var(--ink-soft)] leading-relaxed relative z-20">
