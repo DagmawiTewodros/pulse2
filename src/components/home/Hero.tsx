@@ -2,6 +2,7 @@ import { motion, useScroll, useTransform, type MotionValue } from "framer-motion
 import { useRef } from "react";
 import { CheckCircle2, Rocket, Sparkles } from "lucide-react";
 import { PillLink } from "@/components/ui-brand/PillButton";
+import { HeroWaveEffect } from "./HeroWaveEffect";
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -12,23 +13,17 @@ export function Hero() {
 
   return (
     <section ref={sectionRef} className="relative overflow-hidden">
-      <div
-        className="pointer-events-none absolute inset-0 -z-10 opacity-40"
-        style={{
-          background:
-            "radial-gradient(60% 40% at 50% 0%, oklch(0.42 0.22 275 / 0.15), transparent 70%)",
-        }}
-      />
+      <HeroWaveEffect />
       <div className="container-page pt-12 pb-20 sm:pt-16 md:pt-32 md:pb-40 text-center relative px-4 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 rounded-full border border-border bg-[color:var(--surface-elevated)] px-4 py-1.5 text-xs font-medium text-[color:var(--ink-soft)]"
+          className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 text-xs font-medium text-white/90 backdrop-blur-md"
         >
           <span
-            className="inline-block h-1.5 w-1.5 rounded-full"
-            style={{ background: "var(--color-primary)" }}
+            className="inline-block h-1.5 w-1.5 rounded-full bg-purple-400"
+            style={{ boxShadow: "0 0 10px 2px rgba(168, 85, 247, 0.4)" }}
           />
           Marketing partner for growing businesses
         </motion.div>
@@ -37,7 +32,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="mt-6 sm:mt-8 mx-auto max-w-4xl text-2xl sm:text-3xl md:text-5xl lg:text-7xl font-semibold tracking-tight leading-[1.1] sm:leading-[1.05]"
+          className="mt-6 sm:mt-8 mx-auto max-w-4xl text-2xl sm:text-3xl md:text-5xl lg:text-7xl font-semibold tracking-tight leading-[1.1] sm:leading-[1.05] text-white"
         >
           Close the gap between what you offer and how it looks online.
         </motion.h1>
@@ -46,7 +41,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2 }}
-          className="mt-4 sm:mt-6 mx-auto max-w-2xl text-sm sm:text-base md:text-xl text-[color:var(--ink-soft)] leading-relaxed"
+          className="mt-4 sm:mt-6 mx-auto max-w-2xl text-sm sm:text-base md:text-xl text-white/80 leading-relaxed"
         >
           Most customers look you up online before ever reaching out. We make sure what they find
           builds trust — websites, social, and content, run by people who care.
