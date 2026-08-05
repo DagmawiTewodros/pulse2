@@ -237,11 +237,15 @@ function HubAct({ hubRef, hoveredChannel }: { hubRef: RefObject<HTMLDivElement |
           }}
         />
         <motion.div
-          animate={{ y: [0, -6, 0], scale: hoveredChannel !== null ? 1.08 : 1 }}
-          transition={{ duration: hoveredChannel !== null ? 0.3 : 4, repeat: hoveredChannel !== null ? 0 : Infinity, ease: "easeInOut" }}
-          className={`relative flex h-20 w-20 md:h-24 md:w-24 items-center justify-center rounded-[1.75rem] bg-white border border-purple-100 transition-shadow duration-300 ${
-            hoveredChannel !== null ? "shadow-[0_20px_60px_-10px_rgba(168,85,247,0.7)]" : "shadow-[0_20px_60px_-15px_rgba(168,85,247,0.4)]"
-          }`}
+          animate={{ 
+            y: [0, -6, 0], 
+            scale: hoveredChannel !== null ? 1.08 : [1, 1.05, 1],
+            boxShadow: hoveredChannel !== null 
+              ? "0 20px 60px -10px rgba(168,85,247,0.7)"
+              : ["0 20px 60px -15px rgba(168,85,247,0.4)", "0 25px 65px -5px rgba(168,85,247,0.6)", "0 20px 60px -15px rgba(168,85,247,0.4)"]
+          }}
+          transition={{ duration: hoveredChannel !== null ? 0.3 : 2.5, repeat: Infinity, ease: "easeInOut" }}
+          className="relative flex h-20 w-20 md:h-24 md:w-24 items-center justify-center rounded-[1.75rem] bg-white border border-purple-100"
         >
           <Zap
             size={36}
